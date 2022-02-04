@@ -20,21 +20,18 @@ function App() {
       <Navigation />
       <main>
       <Routes>
-      <Route/>
+      <Route exact path="/" element={<Home/>}/>
+      <Route exact path="/product/table" element={<ProductsTable />}/>
+      <Route exact path="/product/create" element={<ProductCreate/>}/>
+      <Route exact path="/product/edit" element={<ProductEdit/>}/>
+      <Route exact path="*" element={<Error404/>}/>
       </Routes>
 
       </main>
       <Footer />
       </BrowserRouter>
       
-      
-        <Home />
-        {/* <ProductsTable /> */}
-        {/* <ProductCreate/> */}
-        {/* <ProductEdit/> */}
-        {/* <Error404/> */}
-      
-      
+    
     </div>
   );
 }
