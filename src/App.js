@@ -7,19 +7,34 @@ import ProductsTable from "./components/views/ProductsTable/ProductsTable";
 import ProductCreate from "./components/views/ProductCreate/ProductCreate";
 import ProductEdit from "./components/views/ProductEdit/ProductEdit";
 import Error404 from "./components/views/Error404/Error404";
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
 
 function App() {
   return (
     <div>
+      <BrowserRouter>
       <Navigation />
       <main>
+      <Routes>
+      <Route/>
+      </Routes>
+
+      </main>
+      <Footer />
+      </BrowserRouter>
+      
+      
         <Home />
         {/* <ProductsTable /> */}
         {/* <ProductCreate/> */}
         {/* <ProductEdit/> */}
         {/* <Error404/> */}
-      </main>
-      <Footer />
+      
+      
     </div>
   );
 }
