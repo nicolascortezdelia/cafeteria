@@ -1,0 +1,19 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "productName": "Cafe",
+      "price": "50",
+      "urling": "http://cualquiercosa.com",
+      "category": "bebida caliente"
+    },
+
+    {
+      "id": 2,
+      "productName": "Licuado",
+      "price": "40",
+      "urling": "http://cualquiercosa.com",
+      "category": "bebida fría"
+    }
+  ]
+}
