@@ -12,8 +12,26 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import { useState } from "react";
+
 
 function App() {
+  //State
+ const[products, setProducts] = useState([])
+ 
+ //Variable de Entorno
+ const URL = process.env.REACT_APP_API_CAFETERIA;
+ console.log(URL)
+
+ const getApi = async ()=>{
+   try{
+     const res = await fetch()
+   } catch(error){
+
+   }
+
+ }
+
   return (
     <div>
       <BrowserRouter>
