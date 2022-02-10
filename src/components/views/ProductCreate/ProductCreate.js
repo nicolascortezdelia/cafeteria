@@ -2,6 +2,8 @@ import React from "react";
 import { Container, Form } from "react-bootstrap";
 
 const ProductCreate = () => {
+  //State
+  useState
   return (
     <div>
       <Container className="py-5">
