@@ -23,21 +23,19 @@ function App() {
  //Variable de Entorno
  const URL = process.env.REACT_APP_API_CAFETERIA;
 
- useEffect(()=>{
-   getApi();
- },[])
+ useEffect(() => {
+  getApi();
+}, []);
 
-
- const getApi = async ()=>{
-   try{
+ const getApi = async () => {
+   try {
      const res = await fetch(URL);
-     const productApi = await res.json()
-     setProducts(productApi)
-   } catch(error){
-
+     const productApi = await res.json();
+     setProducts(productApi);
+   } catch (error) {
+     console.log(error);
    }
-
- }
+ };
 
   return (
     <div>
@@ -47,7 +45,7 @@ function App() {
       <Routes>
       <Route exact path="/" element={<Home/>}/>
       <Route exact path="/product/table" element={<ProductsTable products={products} />}/>
-      <Route exact path="/product/create" element={<ProductCreate/>}/>
+      <Route exact path="/product/create" element={<ProductCreate URL={URL} getApi={getApi}/>}/>
       <Route exact path="/product/edit" element={<ProductEdit/>}/>
       <Route exact path="*" element={<Error404/>}/>
       </Routes>

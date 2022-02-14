@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import {
   validateProductName,
@@ -7,28 +8,70 @@ import {
   validatePrice,
   validateUrl,
 } from "../../helpers/ValidateFields";
+import Swal from "sweetalert2";
 
-const ProductCreate = () => {
+const ProductCreate = (URL, getApi) => {
   //State
   const [productName, setProductName] = useState("");
   const [price, setProductPrice] = useState(0);
   const [urlImg, seturlImg] = useState("");
   const [category, setCategory] = useState("");
 
-  //funcion para crear Producto
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  //Use navigate
+  const navigate = useNavigate()
 
-    //VALIDO LOS CAMPOS
-    if (
-      !validateProductName(productName) ||
-      !validatePrice(price) ||
-      !validateUrl(urlImg) ||
-      !validateCategory(category)
-    ) {
-      alert("Validación errónea");
-    }
+ //Funcion para crear el producto
+ const handleSubmit = (e) => {
+  e.preventDefault();
+
+  //Valido los campos
+  if (
+    !validateProductName(productName) ||
+    !validatePrice(price) ||
+    !validateUrl(urlImg) ||
+    !validateCategory(category)
+  ) {
+    Swal.fire("Ops!", "Some data is invalid.", "error");
+    return;
+  }
+
+  //Envio los datos para guardarlos
+  const newProduct = {
+    productName,
+    price,
+    urlImg,
+    category,
   };
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Save",
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        const res = await fetch(URL, {
+          method:"POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newProduct),
+        });
+        console.log(res)
+        if (res.status === 201) {
+          Swal.fire("Created!", "Your file has been created.", "success");
+          getApi();
+        navigate("/product/table");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  });
+};
+  
 
   return (
     <div>
@@ -42,7 +85,7 @@ const ProductCreate = () => {
             <Form.Control
               type="text"
               placeholder="Ej: Café"
-              onChange={(e) => setProductName(e.target.value)}
+              onChange={({target}) => setProductName(target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -50,7 +93,7 @@ const ProductCreate = () => {
             <Form.Control
               type="number"
               placeholder="Ej: 50"
-              onChange={(e) => setProductPrice(e.target.value)}
+              onChange={({target}) => setProductPrice(target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -58,12 +101,12 @@ const ProductCreate = () => {
             <Form.Control
               type="text"
               placeholder="Ej: https://media.istockphoto.com/photos/two-freshly-baked-french-id1277579771?k=20"
-              onChange={(e) => seturlImg(e.target.value)}
+              onChange={({target}) => seturlImg(target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Label>Category*</Form.Label>
-            <Form.Select onChange={(e) => setCategory(e.target.value)}>
+            <Form.Select onChange={({target}) => setCategory(target.value)}>
               <option value="">Select an option</option>
               <option value="bebida-caliente">Bebida Caliente</option>
               <option value="bebida-fria">Bebida Fria</option>
